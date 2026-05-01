@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Relay Counsel — Fractional General Counsel</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/raleway@5/400.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/raleway@5/500.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/raleway@5/600.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/raleway@5/700.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #F8F5F1;
+      --bg-alt:    #F0EBE3;
+      --navy:      #1A2B45;
+      --navy-60:   rgba(26, 43, 69, 0.60);
+      --navy-30:   rgba(26, 43, 69, 0.30);
+      --teal:      #4A7F68;
+      --teal-light:#D4E6DE;
+      --stone:     #DDD8D0;
+      --white:     #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      background: var(--bg);
+      color: var(--navy);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--navy);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+      padding: 0 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+
+    .logo {
+      font-size: 42px;
+      letter-spacing: 0.01em;
+      text-decoration: none;
+      color: var(--white);
+    }
+    .logo strong { font-weight: 700; }
+    .logo span   { font-weight: 400; }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+      align-items: center;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: rgba(255,255,255,0.65);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 24px;
+      border-radius: 6px;
+      font-family: 'Raleway', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-primary { background: var(--teal); color: var(--white); border: none; }
+    .btn-outline { background: transparent; color: var(--navy); border: 1.5px solid var(--navy); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 72px 5% 60px;
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 24px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 2px;
+      background: var(--teal);
+      border-radius: 2px;
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 5.5vw, 58px);
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      color: var(--navy);
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--teal);
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--navy-60);
+      max-width: 560px;
+      margin: 0 auto 40px;
+      line-height: 1.65;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 60px 5%; }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 12px;
+    }
+
+    .section-heading {
+      font-size: clamp(26px, 3.5vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      color: var(--navy);
+    }
+
+    .section-sub {
+      font-size: 16px;
+      color: var(--navy-60);
+      max-width: 540px;
+      line-height: 1.65;
+    }
+
+    /* ── PROPOSITION BAND ── */
+    .prop-band {
+      background: var(--navy);
+      padding: 64px 5%;
+    }
+
+    .prop-band-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 40px 48px;
+    }
+
+    .prop-item {}
+    .prop-item h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+      letter-spacing: 0.01em;
+    }
+    .prop-item p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6;
+    }
+    .prop-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--teal);
+      border-radius: 50%;
+      margin-bottom: 16px;
+    }
+
+    /* ── TRANSACTIONS ── */
+    .transactions { background: var(--white); }
+
+    .transactions-header {
+      max-width: 1100px;
+      margin: 0 auto 48px;
+    }
+
+    .tx-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 900px) {
+      .tx-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .tx-grid { grid-template-columns: 1fr; }
+    }
+
+    .tx-card {
+      background: var(--bg);
+      border: 1px solid var(--stone);
+      border-radius: 10px;
+      padding: 22px 24px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .tx-card:hover {
+      border-color: var(--teal);
+      transform: translateY(-2px);
+    }
+
+    .tx-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--teal-light);
+      border-radius: 8px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tx-icon svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--teal);
+      fill: none;
+      stroke-width: 1.75;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .tx-card h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 6px;
+      letter-spacing: 0.01em;
+    }
+    .tx-card p {
+      font-size: 13px;
+      color: var(--navy-60);
+      line-height: 1.55;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how { background: var(--bg); }
+
+    .how-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .how-header { margin-bottom: 56px; }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0;
+      position: relative;
+    }
+
+    .step {
+      padding: 0 24px 0 0;
+      position: relative;
+    }
+
+    .step-number {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--teal);
+      margin-bottom: 16px;
+    }
+
+    .step-bar {
+      width: 48px;
+      height: 3px;
+      background: var(--teal);
+      border-radius: 2px;
+      margin-bottom: 20px;
+    }
+
+    .step h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .step p {
+      font-size: 14px;
+      color: var(--navy-60);
+      line-height: 1.65;
+    }
+
+    /* ── PRICING ── */
+    .pricing { background: var(--white); }
+
+    .pricing-header {
+      max-width: 1100px;
+      margin: 0 auto 48px;
+    }
+
+    .pricing-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      align-items: start;
+    }
+
+    .pricing-card {
+      background: var(--bg);
+      border: 1px solid var(--stone);
+      border-radius: 14px;
+      padding: 36px 32px;
+      position: relative;
+    }
+    .pricing-card.featured {
+      background: var(--navy);
+      border-color: var(--navy);
+    }
+
+    .pricing-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: var(--teal-light);
+      color: var(--teal);
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    .pricing-card.featured .pricing-badge {
+      background: rgba(74, 127, 104, 0.25);
+      color: #8ECEB4;
+    }
+
+    .pricing-tier {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--navy-60);
+      margin-bottom: 8px;
+    }
+    .pricing-card.featured .pricing-tier { color: rgba(255,255,255,0.5); }
+
+    .pricing-price {
+      font-size: 42px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .pricing-card.featured .pricing-price { color: var(--white); }
+
+    .pricing-price sup {
+      font-size: 20px;
+      font-weight: 600;
+      vertical-align: super;
+      letter-spacing: 0;
+    }
+
+    .pricing-cadence {
+      font-size: 13px;
+      color: var(--navy-60);
+      margin-bottom: 24px;
+    }
+    .pricing-card.featured .pricing-cadence { color: rgba(255,255,255,0.45); }
+
+    .pricing-divider {
+      height: 1px;
+      background: var(--stone);
+      margin-bottom: 24px;
+    }
+    .pricing-card.featured .pricing-divider { background: rgba(255,255,255,0.1); }
+
+    .pricing-desc {
+      font-size: 14px;
+      color: var(--navy-60);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+    .pricing-card.featured .pricing-desc { color: rgba(255,255,255,0.6); }
+
+    .pricing-features {
+      list-style: none;
+      margin-bottom: 36px;
+    }
+    .pricing-features li {
+      font-size: 14px;
+      color: var(--navy);
+      padding: 7px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      border-bottom: 1px solid var(--stone);
+    }
+    .pricing-card.featured .pricing-features li {
+      color: rgba(255,255,255,0.85);
+      border-bottom-color: rgba(255,255,255,0.1);
+    }
+    .pricing-features li:last-child { border-bottom: none; }
+
+    .check {
+      flex-shrink: 0;
+      margin-top: 4px;
+      width: 14px;
+      height: 14px;
+    }
+    .check-teal { stroke: var(--teal); }
+    .pricing-card.featured .check-teal { stroke: #8ECEB4; }
+
+    .pricing-card .btn { width: 100%; text-align: center; }
+    .pricing-card.featured .btn-primary { background: var(--teal); }
+
+    .pricing-best-for {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--navy-30);
+      margin-bottom: 20px;
+    }
+    .pricing-card.featured .pricing-best-for { color: rgba(255,255,255,0.25); }
+
+    .pricing-note {
+      font-size: 12px;
+      color: var(--navy-30);
+      line-height: 1.55;
+      margin-top: -24px;
+      margin-bottom: 28px;
+    }
+    .pricing-card.featured .pricing-note { color: rgba(255,255,255,0.3); }
+
+    .pricing-exclusion {
+      max-width: 1100px;
+      margin: 24px auto 0;
+      font-size: 13px;
+      color: var(--navy-60);
+      line-height: 1.6;
+      padding: 16px 20px;
+      background: var(--bg);
+      border: 1px solid var(--stone);
+      border-radius: 8px;
+    }
+    .pricing-exclusion strong { font-weight: 600; color: var(--navy); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      padding: 40px 5%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--white); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255,255,255,0.30);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      nav { padding: 0 6%; }
+      .nav-links { display: none; }
+      section { padding: 60px 6%; }
+      .hero { padding: 64px 6% 56px; }
+      .step { padding: 0 0 40px; }
+      footer { padding: 32px 6%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="logo"><strong>Relay</strong><span> Counsel</span></a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="insights.html">Insights</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="https://calendar.app.google/dsn8agn5VH9WmKDE6" target="_blank" class="btn btn-primary" style="padding: 8px 20px; font-size: 13px;">Book a call</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-eyebrow">Fractional General Counsel</div>
+    <h1>Your legal team.<br><em>Inside every deal.</em></h1>
+    <p class="hero-sub">Legal coverage that runs with you. Relay Counsel gives growing companies expert, in-house-caliber legal support — without the overhead of a full-time hire.</p>
+    <div class="hero-ctas">
+      <a href="https://calendar.app.google/dsn8agn5VH9WmKDE6" target="_blank" class="btn btn-primary">Book a free intro call</a>
+      <a href="#services" class="btn btn-outline">See what we handle</a>
+    </div>
+  </header>
+
+  <!-- PROPOSITION BAND -->
+  <section class="prop-band">
+    <div class="prop-band-inner">
+      <div class="prop-item">
+        <div class="prop-dot"></div>
+        <h3>Outside the org. Inside every deal.</h3>
+        <p>We operate as an extension of your team — not a vendor you hand off to. Your legal needs stay managed, not just advised on.</p>
+      </div>
+      <div class="prop-item">
+        <div class="prop-dot"></div>
+        <h3>No billable hour surprises.</h3>
+        <p>Flat-rate and subscription pricing means you can engage us without watching the clock. Legal work shouldn't come with sticker shock.</p>
+      </div>
+      <div class="prop-item">
+        <div class="prop-dot"></div>
+        <h3>Built for the pace of startups.</h3>
+        <p>Fast-moving companies need legal that keeps up. We prioritize responsiveness and fit into your workflows — not the other way around.</p>
+      </div>
+      <div class="prop-item">
+        <div class="prop-dot"></div>
+        <h3>Pass the baton. Get it back done.</h3>
+        <p>Hand off your legal work, and we handle our leg of the race. You get it back complete, so you can keep moving forward.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRANSACTIONS -->
+  <section class="transactions" id="services">
+    <div class="transactions-header">
+      <div class="section-label">What we handle</div>
+      <h2 class="section-heading">Transactional legal, covered end to end.</h2>
+      <p class="section-sub">From formation to complex commercial deals, we handle the full range of transactional work your company needs as it grows.</p>
+    </div>
+
+    <div class="tx-grid">
+
+      <div class="tx-card">
+        <div class="tx-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <h3>Commercial Contracts & SaaS Agreements</h3>
+        <p>MSAs, SaaS subscription agreements, order forms, and customer-facing terms — drafted on your paper and negotiated.</p>
+      </div>
+
+      <div class="tx-card">
+        <div class="tx-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <h3>Employment & Equity Compensation</h3>
+        <p>Offer letters, option grants, RSAs, equity plan administration, and employment policy frameworks for growing teams.</p>
+      </div>
+
+      <div class="tx-card">
+        <div class="tx-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3>Corporate Formation & Governance</h3>
+        <p>Delaware C-corp formation, cap table structuring, bylaws, board consents, and stockholder agreements done right from day one.</p>
+      </div>
+
+      <div class="tx-card">
+        <div class="tx-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+        </div>
+        <h3>IP & Technology Licensing</h3>
+        <p>Invention assignments, software licensing, open source compliance, and API or data licensing agreements.</p>
+      </div>
+
+      <div class="tx-card">
+        <div class="tx-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <h3>Privacy & Regulatory Compliance</h3>
+        <p>Privacy policies, terms of service, GDPR and CCPA readiness, and ongoing compliance as your product and user base grows.</p>
+      </div>
+
+      <div class="tx-card">
+        <div class="tx-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+        </div>
+        <h3>Outside Counsel Management</h3>
+        <p>Coordinating and managing specialized outside counsel — so you get expert coverage without losing oversight or budget control.</p>
+      </div>
+
+      <div class="tx-card">
+        <div class="tx-icon">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+        <h3>Vendor & Procurement Agreements</h3>
+        <p>Inbound vendor contracts, SaaS subscriptions, and procurement terms — reviewed, negotiated, and filed with appropriate risk allocation.</p>
+      </div>
+
+      <div class="tx-card">
+        <div class="tx-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        </div>
+        <h3>NDAs & Confidentiality Agreements</h3>
+        <p>Mutual and one-way NDAs drafted for partnerships, hiring, fundraising, and M&A — with provisions that actually hold up.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how">
+    <div class="how-inner">
+      <div class="how-header">
+        <div class="section-label">How it works</div>
+        <h2 class="section-heading">Pass the baton. We'll handle our leg.</h2>
+        <p class="section-sub">Relay Counsel is built around a simple idea: you focus on building, we focus on the legal. Three steps, no handoff friction.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">01</div>
+          <div class="step-bar"></div>
+          <h3>You bring the project</h3>
+          <p>Tell us what you're working on — a fundraise, a new vendor contract, a hire. No intake forms, no intake calls. Just start the conversation.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">02</div>
+          <div class="step-bar"></div>
+          <h3>We run our leg</h3>
+          <p>We draft, negotiate, review, and advise. You get a dedicated attorney who understands your business — not a rotating team of strangers.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">03</div>
+          <div class="step-bar"></div>
+          <h3>You get the baton back</h3>
+          <p>Work returned complete. No open loops, no legal landmines. You keep building while we stay ready for the next leg of the race.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing" id="pricing">
+    <div class="pricing-header">
+      <div class="section-label">Pricing</div>
+      <h2 class="section-heading">Straightforward. No surprises.</h2>
+      <p class="section-sub">Three tiers built around where your company is and how much legal support it actually needs. Move between them as you grow.</p>
+    </div>
+
+    <div class="pricing-grid">
+
+      <!-- HOURLY -->
+      <div class="pricing-card">
+        <div class="pricing-tier">Hourly</div>
+        <div class="pricing-best-for">Best for · infrequent needs</div>
+        <div class="pricing-price"><sup>$</sup>500</div>
+        <div class="pricing-cadence">per hour · no retainer required</div>
+        <div class="pricing-divider"></div>
+        <p class="pricing-desc">You need legal help a few times a year — not enough to justify a monthly commitment. Engage as needed, pay only for time spent.</p>
+        <ul class="pricing-features">
+          <li>
+            <svg class="check" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline class="check-teal" points="20 6 9 17 4 12"/></svg>
+            Full range of transactional work
+          </li>
+          <li>
+            <svg class="check" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline class="check-teal" points="20 6 9 17 4 12"/></svg>
+            Scoped per project, billed on hours used
+          </li>
+          <li>
+            <svg class="check" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline class="check-teal" points="20 6 9 17 4 12"/></svg>
+            No monthly minimum or commitment
+          </li>
+          <li>
+            <svg class="check" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline class="check-teal" points="20 6 9 17 4 12"/></svg>
+            Upgrade to a retainer anytime
+          </li>
+        </ul>
+        <a href="contact.html" class="btn btn-outline">Get a quote</a>
+      </div>
+
+      <!-- RELAY -->
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Most popular</div>
+        <div class="pricing-tier">Relay</div>
+        <div class="pricing-best-for">Best for · active deal flow</div>
+        <div class="pricing-price"><sup>$</sup>5,000</div>
+        <div class="pricing-cadence">per month · unlimited hours</div>
+        <div class="pricing-divider"></div>
+        <p class="pricing-desc">Your company has a regular cadence of contracts, hires, and deals. A flat monthly subscription means you engage freely — without watching the clock or worrying about overage.</p>
+        <ul class="pricing-features">
+          <li>
+            <svg class="check" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline class="check-teal" points="20 6 9 17 4 12"/></svg>
+            Proactive issue spotting — we flag risks before you ask
+          </li>
+          <li>
+            <svg class="check" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline class="check-teal" points="20 6 9 17 4 12"/></svg>
+            Your contract template library, built and maintained
+          </li>
+          <li>
+            <svg class="check" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline class="check-teal" points="20 6 9 17 4 12"/></svg>
+            Ask before you sign, not after — no meter running
+          </li>
+          <li>
+            <svg class="check" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline class="check-teal" points="20 6 9 17 4 12"/></svg>
+            Priority turnaround on all matters
+          </li>
+        </ul>
+        <a href="https://calendar.app.google/dsn8agn5VH9WmKDE6" target="_blank" class="btn btn-primary">Book a free intro call</a>
+      </div>
+
+      <!-- RELAY CLO -->
+      <div class="pricing-card">
+        <div class="pricing-tier">Relay CLO</div>
+        <div class="pricing-best-for">Best for · embedded legal leadership</div>
+        <div class="pricing-price"><sup>$</sup>7,500</div>
+        <div class="pricing-cadence">per month · unlimited hours</div>
+        <div class="pricing-divider"></div>
+        <p class="pricing-desc">Everything in Relay, plus a Chief Legal Officer embedded across your org. I show up as part of your leadership team — not just when there's a contract to sign.</p>
+        <ul class="pricing-features">
+          <li>
+            <svg class="check" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline class="check-teal" points="20 6 9 17 4 12"/></svg>
+            Everything in Relay
+          </li>
+          <li>
+            <svg class="check" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline class="check-teal" points="20 6 9 17 4 12"/></svg>
+            Monthly check-ins with each department — cadence set during onboarding
+          </li>
+          <li>
+            <svg class="check" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline class="check-teal" points="20 6 9 17 4 12"/></svg>
+            Dedicated @yourcompany.com email address
+          </li>
+          <li>
+            <svg class="check" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline class="check-teal" points="20 6 9 17 4 12"/></svg>
+            Proactive legal risk identification & roadmapping
+          </li>
+          <li>
+            <svg class="check" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline class="check-teal" points="20 6 9 17 4 12"/></svg>
+            Outside counsel management
+          </li>
+        </ul>
+        <a href="https://calendar.app.google/dsn8agn5VH9WmKDE6" target="_blank" class="btn btn-outline">Book a free intro call</a>
+      </div>
+
+    </div>
+
+    <div class="pricing-exclusion">
+      <strong>Scope note:</strong> All tiers cover transactional legal work. Active litigation and courtroom representation are outside scope across all plans — but Relay CLO includes outside counsel management on your behalf.
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="index.html" class="logo"><strong>Relay</strong><span> Counsel</span></a>
+    <nav class="footer-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <p class="footer-copy">&copy; 2025 Relay Counsel. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
